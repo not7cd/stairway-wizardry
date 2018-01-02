@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask import Flask, request, send_from_directory, render_template, jsonify
 from optivum import timetable_parser
@@ -26,7 +27,7 @@ def data_json():
     """REST data"""
     return jsonify(data)
 
-
+port = int(os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=port)
