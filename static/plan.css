@@ -1,0 +1,19 @@
+.classroom:hover {
+    stroke: white;
+    stroke-width: 5px;
+}
+
+.classroom {
+    fill: #f5a816;
+    fill-rule: evenodd;
+    stroke: none;
+}
+
+.occupied {
+    stroke: white;
+    stroke-width: 3px;
+}
+
+path {
+    stroke: none;
+}

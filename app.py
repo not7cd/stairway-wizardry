@@ -27,6 +27,10 @@ def data_json():
     """REST data"""
     return jsonify(data)
 
+app.route('/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
+
 port = int(os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
