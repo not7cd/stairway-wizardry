@@ -4,6 +4,7 @@ import json
 def adfasdsdg(li, elt):
     i = elt.pop('w')
     k = elt.pop('g')
+    k = ''.join(k.split(' '))
     # s = elt.pop('s')
     
     # print(i,k,s)
