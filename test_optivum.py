@@ -1,7 +1,8 @@
 import datetime
+import json
 from bs4 import BeautifulSoup
 
-from optivum import timetable_scraper
+from optivum import timetable_scraper, timetable_parser
 
 sitemap_html = '''<html>
 <body>
@@ -35,4 +36,25 @@ Plan aktualny od 2017-11-06</br></br>
 def test_get_sitemap_date():
     sitemap = BeautifulSoup(sitemap_html, 'html.parser')
     assert timetable_scraper.get_sitemap_date(sitemap) == datetime.datetime(year=2017, month=11, day=6)
+
+def test_reduce_diff():
+    with open('timetable.json') as file:
+        timetable = json.load(file)
+
+    reduced = timetable_parser.reduce_timetable(timetable)
+
+    assert reduced[0] != reduced[1]
+    assert reduced[0] != reduced[2]
+    assert reduced[0] != reduced[3]
+    assert reduced[0] != reduced[4]
+
+def test_reduce_len():
+    with open('timetable.json') as file:
+        timetable = json.load(file)
+
+    reduced = timetable_parser.reduce_timetable(timetable)
+
+    assert len(reduced) == 5
+    
+
 

@@ -4,16 +4,26 @@ import json
 def adfasdsdg(li, elt):
     i = elt.pop('w')
     k = elt.pop('g')
-    s = elt.pop('s')
+    # s = elt.pop('s')
     
-    li[i][k] = li[i].get(k, {})
-    li[i][k][s] = elt
+    # print(i,k,s)
+
+    li[i] = li.get(i, {})
+    li[i][k] = li[i].get(k, [])
+    li[i][k].append(elt)
 
     return li
 
 
+def change_keys(elt):
+    elt['id'] = elt.pop('s')
+    return elt
+
+
 def reduce_timetable(timetable):
-    return reduce(adfasdsdg, timetable['lessons'], [{}]*5)
+
+    result = reduce(adfasdsdg, map(change_keys, timetable['lessons']), {})
+    return result
 
 
 

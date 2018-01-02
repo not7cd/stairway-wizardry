@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <main class="container-fluid">
+        <h1>Hello, world!</h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-7">
+                {% include "plan.svg" %}
+            </div>
+            <div class="col-md-4">
+                <div class=" btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" id="bl1">1</button>
+                    <button type="button" class="btn btn-secondary" id="bl2">2</button>
+                    <button type="button" class="btn btn-secondary" id="bl3">3</button>
+                    <button type="button" class="btn btn-secondary" id="bl4">4</button>
+                    <button type="button" class="btn btn-secondary" id="bl5">5</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript">
+
+    $(document).ready(_ => {
+        
+        $('#bl1').click(_ => {
+            $('#layer2').toggle()
+        })        
+        $('#bl2').click(_ => {
+            $('#layer12').toggle()
+        })        
+        $('#bl3').click(_ => {
+            $('#layer13').toggle()
+        })        
+        $('#bl4').click(_ => {
+            $('#layer14').toggle()
+        })
+        $('#bl5').click(_ => {
+            $('#layer15').toggle()
+        })
+
+        $('#layer2').hide()
+        $('#layer12').hide()
+        $('#layer13').hide()
+        $('#layer14').hide()
+        $('#layer15').hide()
+
+        $("path").popover({trigger: 'hover', placement: 'top'});
+
+        fetch('/data')
+            .then(res => res.json())
+            .then(week => week[0])
+            .then(hours => hours['10:00-10:45'])
+            .then(lessons => {
+                console.log(lessons)
+
+                d3.select('#plan').selectAll('path')
+                    .datum(function() {
+                      console.log(this.id)
+                      return {'id': this.id}})
+                    .data(lessons, d => d ? d.id : this.id)
+                    .style('stroke', 'white')
+                    .style('stroke-width', '10px')
+                    .attr('data-content', d => {
+                      return `${d.p}\n${d.n}\n${d.o}`
+                    })
+                    .attr('data-original-title', d => d.p)
+                    
+            })
+
+    })
+    </script>
+</body>
+
+</html>
