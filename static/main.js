@@ -1,3 +1,5 @@
+'use strict'
+
 $(document).ready(function () {
   var stringToColour = function (str) {
     var hash = 0
@@ -18,6 +20,48 @@ $(document).ready(function () {
   })
   $("input[value='#level_1']").button('checked', true).parent().addClass('active').trigger('change')
 
+  $('#nextHours').click(function () {
+    const n = $('#selectHours option:selected').next()
+    if (n) {
+      n.prop('selected', true)
+      .prev()
+      .prop('selected', false)
+      .parent().trigger('change')
+    }
+  })
+
+  $('#prevHours').click(function () {
+    const p = $('#selectHours option:selected').prev()
+    console.log(p)
+    if (p) {
+      p.prop('selected', true)
+      .next()
+      .prop('selected', false)
+      .parent().trigger('change')
+    }
+  })
+
+  $('#nextWeekday').click(function () {
+    const n = $('#selectWeekday option:selected').next()
+    if (n) {
+      n.prop('selected', true)
+      .prev()
+      .prop('selected', false)
+      .parent().trigger('change')
+    }
+  })
+
+  $('#prevWeekday').click(function () {
+    const p = $('#selectWeekday option:selected').prev()
+    console.log(p)
+    if (p) {
+      p.prop('selected', true)
+      .next()
+      .prop('selected', false)
+      .parent().trigger('change')
+    }
+  })
+
   $('path').popover({html: true, trigger: 'hover', placement: 'top' })
 
   function updatePlan (lessons) {
@@ -25,10 +69,10 @@ $(document).ready(function () {
     d3.selectAll('.classroom')
       .style('fill', '')
     d3.select('#plan').selectAll('path')
-      .attr('data-content', '')
+      .attr('data-content', d => d ? `${d.id.split('_').join(' ')}` : '')
       .attr('data-original-title', '')
       .classed('occupied', false)
-      .data(lessons, d => d ? d.id : this.id)
+      .data(lessons, d => d ? d.id : null)
       .classed('classroom', true)
       .classed('occupied', true)
       .style('fill', d => stringToColour(d.p))
@@ -48,23 +92,38 @@ $(document).ready(function () {
 
   d3.select('#plan').selectAll('path')
   .datum(function () {
-    return { 'id': this.id }
+    return this.id.startsWith('path') ? null : { 'id': this.id }
   })
 
+  let week_
+  let hours_
   fetch('/data')
     .then(res => res.json())
-    .then(week => week[0])
-    .then(hours => {
-      s = $('#selectHours')
-      s.on('change', function () {
-        updatePlan(hours[this.value])
-      })
-      for (var hour in hours) {
+    .then(week => {
+      week_ = week
+      hours_ = week[0]
+
+      let s = $('#selectHours')
+      for (var hour in hours_) {
         s.append(`<option>${hour}</option>`)
       }
-      return hours['10:00-10:45']
+      s.trigger('change')
+      const getWeek = function (w) {
+        console.log(week_)
+        return week_[w]
+      }
+      const getHours = _ => { return hours_ }
+
+      $('#selectHours').on('change', function () {
+        updatePlan(getWeek($('#selectWeekday').val())[this.value])
+      })
+
+      $('#selectWeekday').prop('disabled', false)
+      .on('change', function () {
+        // console.log(this.value)
+        $('#selectHours').trigger('change')
+      })
     })
-    .then(lessons => updatePlan(lessons))
 
   const data = fetch('/data')
     .then(res => res.json())

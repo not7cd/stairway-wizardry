@@ -18,43 +18,63 @@
                 {% include "plan.svg" %}
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-                <div class="card">
+                <div id="controls" class="card">
                     <div class="card-body">
                         <h5 class="card-title">Plan Budynku ILO</h5>
                         <div class="form-group">
                             <label for="selectLevel">Piętro</label>
-                            <div id="selectLevel" class="btn-group-toggle btn-group" data-toggle="buttons" aria-label="Piętro">
-                                <label class="btn btn-light">
-                                    <input type="radio" name="selectLevel" value="#level_0">0</input>
-                                </label>
-                                <label class="btn btn-light">
-                                    <input type="radio" name="selectLevel" value="#level_1">1</input>
-                                </label>
-                                <label class="btn btn-light">
-                                    <input type="radio" name="selectLevel" value="#level_2">2</input>
-                                </label>
-                                <label class="btn btn-light">
-                                    <input type="radio" name="selectLevel" value="#level_3">3</input>
-                                </label>
-                                <label class="btn btn-light">
-                                    <input type="radio" name="selectLevel" value="#level_4">4</input>
-                                </label>
+                            <div>
+                                <div id="selectLevel" class="btn-group-toggle btn-group btn-group-justified" data-toggle="buttons" aria-label="Piętro">
+                                    <label class="btn btn-outline-secondary ">
+                                        <input type="radio" name="selectLevel" value="#level_0">0</input>
+                                    </label>
+                                    <label class="btn btn-outline-secondary ">
+                                        <input type="radio" name="selectLevel" value="#level_1">1</input>
+                                    </label>
+                                    <label class="btn btn-outline-secondary ">
+                                        <input type="radio" name="selectLevel" value="#level_2">2</input>
+                                    </label>
+                                    <label class="btn btn-outline-secondary ">
+                                        <input type="radio" name="selectLevel" value="#level_3">3</input>
+                                    </label>
+                                    <label class="btn btn-outline-secondary ">
+                                        <input type="radio" name="selectLevel" value="#level_4">4</input>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="selectHours">Godzina lekcyjna</label>
-                            <select class="form-control" id="selectHours">
-                            </select>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="prevHours" class="btn btn-outline-secondary" type="button">
+                                        <</button>
+                                </div>
+                                <select class="custom-select" id="selectHours">
+                                </select>
+                                <div class="input-group-append">
+                                    <button id="nextHours" class="btn btn-outline-secondary" type="button">></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="selectWeekdays">Dzień tygodnia</label>
-                            <select class="form-control" id="selectWeekdays">
-                                <option value="0">Poniedziałek</option>
-                                <option value="1">Wtorek</option>
-                                <option value="2">Środa</option>
-                                <option value="3">Czwarte</option>
-                                <option value="4">Piątek</option>
-                            </select>
+                            <label for="selectWeekday">Dzień tygodnia</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="prevWeekday" class="btn btn-outline-secondary" type="button">
+                                        <</button>
+                                </div>
+                                <select class="custom-select" id="selectWeekday" disabled>
+                                    <option value="0">Poniedziałek</option>
+                                    <option value="1">Wtorek</option>
+                                    <option value="2">Środa</option>
+                                    <option value="3">Czwartek</option>
+                                    <option value="4">Piątek</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button id="nextWeekday" class="btn btn-outline-secondary" type="button">></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
