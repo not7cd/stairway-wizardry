@@ -22,7 +22,6 @@ def change_keys(elt):
 
 
 def reduce_timetable(timetable):
-
     result = reduce(adfasdsdg, map(change_keys, timetable['lessons']), {})
     return result
 

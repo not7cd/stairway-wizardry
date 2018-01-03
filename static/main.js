@@ -120,10 +120,10 @@ $(document).ready(function () {
 
       $('#selectWeekday').prop('disabled', false)
       .on('change', function () {
-        // console.log(this.value)
         $('#selectHours').trigger('change')
       })
     })
+    .then(_ => $('#selectHours').trigger('change'))
 
   const data = fetch('/data')
     .then(res => res.json())

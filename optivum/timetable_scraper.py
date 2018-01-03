@@ -87,6 +87,23 @@ def get_timetable(base_url):
 
     return result
 
+def get_actual(path, url):
+    with open(path) as file:
+        timetable = json.load(file)
+
+    d1 = dparser.parse(timetable['valid_from'])
+    d2 = get_sitemap_date(get_soup(url + 'lista.html'))
+
+    # print(d1, d2)
+
+    if d1 >= d2:
+        print('using cached')
+        return timetable
+    else:
+        print('scraping new')
+        return get_timetable(url)
+
+
 
 if __name__ == '__main__':
     BASE_URL = 'http://ilo.gda.pl/src/plan/'

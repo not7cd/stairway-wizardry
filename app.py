@@ -2,14 +2,14 @@ import json
 import os
 
 from flask import Flask, request, send_from_directory, render_template, jsonify
-from optivum import timetable_parser
+from optivum import timetable_parser, timetable_scraper
 
 
 app = Flask(__name__, static_url_path='')
 
-with open('timetable.json') as file:
-    timetable = json.load(file)
 
+timetable = timetable_scraper.get_actual('timetable.json', 'http://ilo.gda.pl/src/plan/')
+# print(timetable)
 data = timetable_parser.reduce_timetable(timetable)
 
 @app.route("/svg")
