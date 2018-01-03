@@ -1,13 +1,13 @@
 'use strict'
 
 $(document).ready(function () {
-  var stringToColour = function (str) {
+  const stringToColour = function (str) {
     var hash = 0
-    for (var i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash)
     }
     var colour = '#'
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       var value = (hash >> (i * 8)) & 0xFF
       colour += ('00' + value.toString(16)).substr(-2)
     }
@@ -18,7 +18,6 @@ $(document).ready(function () {
     $('.level').hide()
     $($("input[name='selectLevel']:checked").val()).show()
   })
-  $("input[value='#level_1']").button('checked', true).parent().addClass('active').trigger('change')
 
   $('#nextHours').click(function () {
     const n = $('#selectHours option:selected').next()
@@ -123,7 +122,11 @@ $(document).ready(function () {
         $('#selectHours').trigger('change')
       })
     })
-    .then(_ => $('#selectHours').trigger('change'))
+    .then(_ => {
+      $('#selectHours').trigger('change')
+      $("input[value='#level_1']").button('checked', true).parent().addClass('active').trigger('change')
+      $('.invisible').removeClass('invisible')
+    })
 
   const data = fetch('/data')
     .then(res => res.json())

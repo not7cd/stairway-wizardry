@@ -8,7 +8,7 @@ from optivum import timetable_parser, timetable_scraper
 app = Flask(__name__, static_url_path='')
 
 
-timetable = timetable_scraper.get_actual('timetable.json', 'http://ilo.gda.pl/src/plan/')
+timetable = timetable_scraper.get_actual('data/timetable.json', 'http://ilo.gda.pl/src/plan/')
 # print(timetable)
 data = timetable_parser.reduce_timetable(timetable)
 

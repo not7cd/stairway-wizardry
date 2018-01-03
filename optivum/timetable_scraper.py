@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup as bs
 
 def get_soup(url):
     response = requests.get(url)
-    return bs(response.text, 'html.parser')
+    return bs(response.content.decode('utf-8','ignore'), 'html.parser')
 
 
 def extract_id(path):
@@ -88,7 +88,7 @@ def get_timetable(base_url):
     return result
 
 def get_actual(path, url):
-    with open(path) as file:
+    with open(path, encoding="utf-8") as file:
         timetable = json.load(file)
 
     d1 = dparser.parse(timetable['valid_from'])
@@ -108,5 +108,5 @@ def get_actual(path, url):
 if __name__ == '__main__':
     BASE_URL = 'http://ilo.gda.pl/src/plan/'
     result = get_timetable(BASE_URL)
-    with open('timetable.json', 'w') as file:
+    with open('data/timetable.json', 'w', encoding="utf-8") as file:
         json.dump(result, file)
